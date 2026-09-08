@@ -3,6 +3,45 @@
 **USAR, GGSIPU — Hackathon Prototype**
 *AI-driven geospatial platform for Surface AQI estimation and HCHO hotspot detection over India, in support of the National Clean Air Programme (NCAP).*
 
+## Technical Approach
+
+**The idea, in one line:** satellites see the whole air column from space; we use AI to bring that down to ground-level pollution, producing one AQI number (with a source) for every 2 km grid cell across India.
+
+**Input — five free, open data sources:**
+| Source | What it gives us |
+|---|---|
+| INSAT-3D (MOSDAC) | Aerosol Optical Depth — satellite haze data |
+| Sentinel-5P TROPOMI | HCHO, NO₂, SO₂, CO, O₃ column levels |
+| CPCB ground stations | Real ground-truth AQI readings (data.gov.in) |
+| ERA5 / IMDAA | Wind, humidity, temperature — for dispersion & correction |
+| NASA FIRMS | Active fire locations (for biomass-burning correlation) |
+
+**Process — six-stage pipeline (Python · TensorFlow/Keras · scikit-learn):**
+1. **Grid Map** — standardize all data sources onto a common 2 km grid over India
+2. **Sync Data** — align satellite timestamps/locations with ground station records
+3. **AI Prediction** — a CNN-LSTM model estimates ground-level PM2.5 from the aligned features (satellite AOD, weather, seasonality)
+4. **Calculate AQI** — apply the official CPCB 2014 sub-index breakpoint formula to the predicted PM2.5 (implemented from scratch in `utils/aqi_calculator.py`, not a library)
+5. **Detect Hotspots** — statistical clustering (density-based) on HCHO concentration to flag real pollution clusters, filtering out noise
+6. **Trace Source** — correlate HCHO hotspots against NASA FIRMS fire locations to distinguish biomass-burning pollution from other sources
+
+**Output:** daily AQI map, HCHO hotspot map, fire↔smoke correlation, an auto-drafted GRAP advisory, and CSV/GeoJSON exports — all surfaced across the 8 screens of the Streamlit app.
+
+**Actual system architecture** (no separate backend, no database — this is a single Python process):
+
+```
+Browser  →  Streamlit app (app.py)
+                 │
+                 ▼
+        utils/ Python modules
+   (data fetch · AQI calc · hotspot detection · forecasting)
+                 │
+                 ▼
+   CPCB live API (data.gov.in) — or realistic
+   simulated data when live feeds are unavailable
+```
+
+No FastAPI/Django/Flask layer, no MongoDB/PostgreSQL, no React frontend — Streamlit + Plotly render everything directly from the Python functions in `utils/`, in-memory, on each request. This keeps the prototype laptop-trainable and free to run (₹0 data cost), and matches exactly what's demoed live — nothing in this section describes a component that isn't actually in the code.
+
 ## Run it
 
 ```bash
@@ -44,92 +83,31 @@ Each has the exact real data source and access pattern commented in.
 ## Enabling Live CPCB Data
 
 Core pollutant readings (PM2.5, PM10, NO2, SO2, CO, O3) can be pulled live
-from CPCB via data.gov.in's **"Real time Air Quality Index from various
-locations"** resource, blended into the otherwise-simulated dataset for any
-city where a live station matches.
+from CPCB via data.gov.in, blended into the otherwise-simulated dataset for
+any city where a live station matches.
 
-### 1. Get your API key
-1. Go to **https://data.gov.in** → **Sign Up** (top right) and verify your account.
-2. Once logged in, go to **My Account → My Profile**. Your auto-generated
-   API key is shown there (data.gov.in issues one key per account — you
-   don't request one per dataset).
-3. Copy that key.
-
-### 2. Add the key to the app
-Copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and
-paste your key in:
-```toml
-CPCB_API_KEY = "your-key-here"
-```
-**Never commit `secrets.toml` to a public repo** (it's already covered by
-`.gitignore`-style convention — double-check before pushing). If deploying
-to Streamlit Community Cloud, don't use a file at all — paste the key into
-the app's **Settings → Secrets** panel in the dashboard instead, using the
-same `CPCB_API_KEY = "..."` line.
-
-### 3. Turn it on
-1. `pip install -r requirements.txt` (adds `requests` for the API call and
-   `streamlit-autorefresh` for background live updates).
-2. Run the app — a **"Use live CPCB ground data"** toggle appears in the
-   sidebar once a key is detected. Turn it on.
-3. Two more controls appear next to it:
-   - **🔁 Auto-refresh** — on by default, re-pulls CPCB data on an interval
-     you choose (1–30 min) with zero interaction, so the dashboard keeps
-     itself current the way a live monitor should.
-   - **↻ Refresh now** — force an immediate re-pull (bypasses the 60s cache).
-4. The hero banner shows the live/fallback status honestly, plus a
-   last-updated time: 🟢 if live data matched, 🟡/⚪ if it silently fell
-   back to simulated (e.g. API down, no matching station for a city) — the
-   app never crashes because of this external dependency, it just tells you
-   what it's actually showing.
-
-### 4. (Recommended) Add a WAQI fallback token
-
-data.gov.in's API is occasionally slow or returns 502/504 errors under
-load — that's the government server, not your setup. To make the live
-toggle more reliable, the app can automatically fall back to the **World
-Air Quality Index project (aqicn.org)**, which mirrors the same CPCB
-station network through a faster, more stable API:
-
-1. Go to **https://aqicn.org/data-platform/register**, enter your email,
-   click the confirmation link. Your free token is shown on that page.
-2. Add it to `secrets.toml` alongside your CPCB key:
+1. Register at **data.gov.in** and get your API key from **My Account**.
+2. Copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and
+   paste your key in:
    ```toml
-   WAQI_API_TOKEN = "your-waqi-token-here"
+   CPCB_API_KEY = "your-key-here"
    ```
-3. No extra toggle needed — the app tries **WAQI first** (more reliable
-   uptime, same underlying CPCB data); if that fails, it falls back to
-   **CPCB direct** (data.gov.in); only if both fail does it fall back to
-   simulated data. The hero banner shows which one actually served the
-   data (`source: CPCB via WAQI` or `source: CPCB (data.gov.in)`).
+   **Never commit `secrets.toml` to a public repo.** If deploying to
+   Streamlit Community Cloud, don't use a file at all — paste the key into
+   the app's **Settings → Secrets** panel in the dashboard instead.
+3. Run the app — a "Use live CPCB ground data" toggle appears in the
+   sidebar once a key is detected. Turn it on.
+4. The hero banner shows the live/fallback status honestly: 🟢 if live data
+   matched, 🟡/⚪ if it silently fell back to simulated (e.g. API down, no
+   matching station for a city) — the app never crashes because of this
+   external dependency, it just tells you what it's actually showing.
 
-This is optional — the app works fine with just `CPCB_API_KEY`, it's just
-less resilient to data.gov.in's occasional flakiness without it.
-
-### How the "real-time" sync works
-- CPCB stations themselves typically publish new readings roughly hourly,
-  so the app caches each live pull for 60 seconds (avoids hammering
-  data.gov.in on every click) and then transparently re-fetches — either
-  when the auto-refresh timer fires, or when you hit "Refresh now."
-- Only the six criteria pollutants (PM2.5, PM10, NO2, SO2, CO, O3) come from
-  CPCB. HCHO, AOD, wind/fire layers stay simulated (see "What's real vs.
-  simulated" below) since those need TROPOMI/FIRMS/GEE credentials, not CPCB.
-- Matching is by **city name** (case-insensitive) against the `LOCATIONS`
-  list in `utils/data_simulator.py`. If your city of interest isn't matching,
-  it's almost always a name mismatch (e.g. CPCB says "Bengaluru", your list
-  has a different spelling) — check the hero badge's "X/Y cities matched"
-  count and adjust `LOCATIONS` city names to match CPCB's naming if needed.
-
-**Verified:** `fetch_live_cpcb()`'s parsing logic (JSON → per-station rows →
-city-level pivot) was tested end-to-end against the real, documented
-data.gov.in schema for this resource (`state, city, station, pollutant_id,
-pollutant_min/max/avg, ...`) using a mocked response matching that exact
-shape — the resource ID, field names, and pivot logic are all correct.
-The one thing that couldn't be tested from this build environment is the
-live HTTPS call itself (no network route to `api.data.gov.in` from this
-sandbox) — so run it once with your real key and confirm the sidebar
-toggle goes green before a live demo, and keep "Refresh now" / the toggle
-handy in case the government API is ever slow or down.
+**Important:** this integration was built and unit-tested against a mocked
+API response (see the parsing logic in `utils/data_simulator.py`), but the
+live network call itself has **not** been verified end-to-end — my build
+sandbox has no route to `api.data.gov.in`. Test it yourself with a real key
+before relying on it in a live demo, and keep the toggle handy to switch
+back to simulated data if the live API is ever slow/down during judging.
 
 ## Next steps for judges / post-hackathon
 
