@@ -1,0 +1,398 @@
+{
+  "Andaman and Nicobar Islands": {
+    "center_lat": 11.303,
+    "center_lon": 92.9499,
+    "zoom": 5.2,
+    "bounds": [
+      92.378,
+      6.766,
+      93.915,
+      13.574
+    ]
+  },
+  "Andhra Pradesh": {
+    "center_lat": 15.7558,
+    "center_lon": 79.9652,
+    "zoom": 4.6,
+    "bounds": [
+      76.76,
+      12.627,
+      84.764,
+      19.119
+    ]
+  },
+  "Arunachal Pradesh": {
+    "center_lat": 28.0388,
+    "center_lon": 94.674,
+    "zoom": 5.2,
+    "bounds": [
+      91.56,
+      26.651,
+      97.388,
+      29.459
+    ]
+  },
+  "Assam": {
+    "center_lat": 26.3567,
+    "center_lon": 92.8279,
+    "zoom": 5.2,
+    "bounds": [
+      89.7,
+      24.154,
+      96.016,
+      27.972
+    ]
+  },
+  "Bihar": {
+    "center_lat": 25.6793,
+    "center_lon": 85.6076,
+    "zoom": 5.8,
+    "bounds": [
+      83.35,
+      24.288,
+      88.28,
+      27.517
+    ]
+  },
+  "Chandigarh": {
+    "center_lat": 30.7246,
+    "center_lon": 76.7794,
+    "zoom": 8.5,
+    "bounds": [
+      76.71,
+      30.682,
+      76.838,
+      30.761
+    ]
+  },
+  "Chhattisgarh": {
+    "center_lat": 21.2682,
+    "center_lon": 82.0424,
+    "zoom": 5.2,
+    "bounds": [
+      80.271,
+      17.795,
+      84.397,
+      24.102
+    ]
+  },
+  "Dadra and Nagar Haveli and Daman and Diu": {
+    "center_lat": 20.2344,
+    "center_lon": 72.9811,
+    "zoom": 6.5,
+    "bounds": [
+      70.92,
+      20.086,
+      73.211,
+      20.742
+    ]
+  },
+  "Delhi": {
+    "center_lat": 28.6443,
+    "center_lon": 77.115,
+    "zoom": 8.5,
+    "bounds": [
+      76.846,
+      28.405,
+      77.348,
+      28.859
+    ]
+  },
+  "Goa": {
+    "center_lat": 15.3637,
+    "center_lon": 74.0581,
+    "zoom": 7.5,
+    "bounds": [
+      73.685,
+      14.901,
+      74.326,
+      15.75
+    ]
+  },
+  "Gujarat": {
+    "center_lat": 22.7027,
+    "center_lon": 71.5721,
+    "zoom": 5.2,
+    "bounds": [
+      68.101,
+      20.121,
+      74.465,
+      24.712
+    ]
+  },
+  "Haryana": {
+    "center_lat": 29.1988,
+    "center_lon": 76.3445,
+    "zoom": 5.8,
+    "bounds": [
+      74.48,
+      27.654,
+      77.583,
+      30.904
+    ]
+  },
+  "Himachal Pradesh": {
+    "center_lat": 31.9262,
+    "center_lon": 77.2464,
+    "zoom": 5.8,
+    "bounds": [
+      75.598,
+      30.379,
+      79.008,
+      33.251
+    ]
+  },
+  "Jammu and Kashmir": {
+    "center_lat": 33.645,
+    "center_lon": 74.8557,
+    "zoom": 5.8,
+    "bounds": [
+      73.39,
+      32.308,
+      76.773,
+      35.11
+    ]
+  },
+  "Jharkhand": {
+    "center_lat": 23.6555,
+    "center_lon": 85.5554,
+    "zoom": 5.8,
+    "bounds": [
+      83.33,
+      21.984,
+      87.96,
+      25.331
+    ]
+  },
+  "Karnataka": {
+    "center_lat": 14.7111,
+    "center_lon": 76.1666,
+    "zoom": 5.2,
+    "bounds": [
+      74.086,
+      11.595,
+      78.586,
+      18.442
+    ]
+  },
+  "Kerala": {
+    "center_lat": 10.4544,
+    "center_lon": 76.408,
+    "zoom": 5.8,
+    "bounds": [
+      74.869,
+      8.292,
+      77.403,
+      12.759
+    ]
+  },
+  "Ladakh": {
+    "center_lat": 34.9449,
+    "center_lon": 76.7791,
+    "zoom": 5.2,
+    "bounds": [
+      72.531,
+      32.338,
+      80.326,
+      37.077
+    ]
+  },
+  "Lakshadweep": {
+    "center_lat": 8.2708,
+    "center_lon": 73.0383,
+    "zoom": 8.5,
+    "bounds": [
+      73.018,
+      8.263,
+      73.054,
+      8.276
+    ]
+  },
+  "Madhya Pradesh": {
+    "center_lat": 23.5393,
+    "center_lon": 78.2912,
+    "zoom": 4.6,
+    "bounds": [
+      74.054,
+      21.076,
+      82.813,
+      26.869
+    ]
+  },
+  "Maharashtra": {
+    "center_lat": 19.455,
+    "center_lon": 76.1096,
+    "zoom": 4.6,
+    "bounds": [
+      72.654,
+      15.612,
+      80.895,
+      22.03
+    ]
+  },
+  "Manipur": {
+    "center_lat": 24.7298,
+    "center_lon": 93.8725,
+    "zoom": 6.5,
+    "bounds": [
+      92.976,
+      23.848,
+      94.744,
+      25.605
+    ]
+  },
+  "Meghalaya": {
+    "center_lat": 25.5389,
+    "center_lon": 91.2765,
+    "zoom": 6.5,
+    "bounds": [
+      89.815,
+      25.03,
+      92.792,
+      26.119
+    ]
+  },
+  "Mizoram": {
+    "center_lat": 23.3118,
+    "center_lon": 92.8315,
+    "zoom": 6.5,
+    "bounds": [
+      92.257,
+      22.011,
+      93.427,
+      24.513
+    ]
+  },
+  "Nagaland": {
+    "center_lat": 26.061,
+    "center_lon": 94.4655,
+    "zoom": 6.5,
+    "bounds": [
+      93.329,
+      25.199,
+      95.234,
+      27.034
+    ]
+  },
+  "Odisha": {
+    "center_lat": 20.5123,
+    "center_lon": 84.4302,
+    "zoom": 5.2,
+    "bounds": [
+      81.397,
+      17.818,
+      87.485,
+      22.557
+    ]
+  },
+  "Puducherry": {
+    "center_lat": 11.6492,
+    "center_lon": 79.8824,
+    "zoom": 5.2,
+    "bounds": [
+      75.537,
+      10.827,
+      82.27,
+      16.737
+    ]
+  },
+  "Punjab": {
+    "center_lat": 30.8431,
+    "center_lon": 75.4163,
+    "zoom": 5.8,
+    "bounds": [
+      73.879,
+      29.56,
+      76.925,
+      32.511
+    ]
+  },
+  "Rajasthan": {
+    "center_lat": 26.5841,
+    "center_lon": 73.851,
+    "zoom": 4.6,
+    "bounds": [
+      69.484,
+      23.06,
+      78.271,
+      30.194
+    ]
+  },
+  "Sikkim": {
+    "center_lat": 27.5653,
+    "center_lon": 88.4739,
+    "zoom": 7.5,
+    "bounds": [
+      88.038,
+      27.071,
+      88.919,
+      28.098
+    ]
+  },
+  "Tamil Nadu": {
+    "center_lat": 11.015,
+    "center_lon": 78.4096,
+    "zoom": 5.2,
+    "bounds": [
+      76.234,
+      8.077,
+      80.345,
+      13.565
+    ]
+  },
+  "Telangana": {
+    "center_lat": 17.8006,
+    "center_lon": 79.0083,
+    "zoom": 5.8,
+    "bounds": [
+      77.242,
+      15.841,
+      81.31,
+      19.912
+    ]
+  },
+  "Tripura": {
+    "center_lat": 23.7544,
+    "center_lon": 91.7477,
+    "zoom": 6.5,
+    "bounds": [
+      91.156,
+      22.965,
+      92.331,
+      24.525
+    ]
+  },
+  "Uttar Pradesh": {
+    "center_lat": 26.9249,
+    "center_lon": 80.5663,
+    "zoom": 5.2,
+    "bounds": [
+      77.106,
+      23.871,
+      84.625,
+      30.401
+    ]
+  },
+  "Uttarakhand": {
+    "center_lat": 30.1577,
+    "center_lon": 79.2112,
+    "zoom": 5.8,
+    "bounds": [
+      77.575,
+      28.723,
+      81.045,
+      31.456
+    ]
+  },
+  "West Bengal": {
+    "center_lat": 23.8369,
+    "center_lon": 87.9698,
+    "zoom": 5.2,
+    "bounds": [
+      85.819,
+      21.556,
+      89.87,
+      27.22
+    ]
+  }
+}
